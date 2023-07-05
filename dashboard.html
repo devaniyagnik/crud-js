@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <title>Dashboard</title>
+    <style>
+      body {
+        margin: 0px;
+        padding: 0px;
+        box-sizing: border-box;
+      }
+      .card {
+        background: linear-gradient(#e66465, #9198e5);
+        color: white;
+      }
+
+      @media (max-width: 576px) {
+        .nav {
+          flex-direction: column !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="fluid-container p-4">
+      <div class="d-flex justify-content-between w-100 align-items-center nav">
+        <h1>Dashboard</h1>
+        <div class="d-flex align-items-center">
+          <h3 id="username" class="mr-3"></h3>
+          <button class="btn btn-primary" onclick="logout()">Log Out</button>
+        </div>
+      </div>
+      <div class="row card-container"></div>
+    </div>
+    <script>
+      function logout() {
+        localStorage.removeItem("isLoggedIn");
+        localStorage.removeItem("user");
+        localStorage.setItem("isLoggedOut", true);
+        window.location.href = "./login.html";
+      }
+
+      window.addEventListener("load", function () {
+        let isLoggedOut = localStorage.getItem("isLoggedOut");
+        if (
+          isLoggedOut &&
+          window.location.pathname.split("/").pop() === "dashboard.html"
+        ) {
+          window.location.href = "./login.html"; // Redirect to the appropriate page after logout
+        }
+      });
+
+      console.log(window.location);
+      var logincheck = localStorage.getItem("isLoggedIn");
+      console.log(logincheck);
+      if (logincheck) {
+      }
+      var cardcontainer = document.querySelector(".card-container");
+
+      fetch("https://64538c86e9ac46cedf287029.mockapi.io/register")
+        .then((res) => res.json())
+        .then((data) => {
+          data.forEach((e) => {
+            var cardcontainer2 = document.createElement("div");
+            cardcontainer2.className =
+              "col-lg-3 col-md-6 col-sm-12 my-3 text-center";
+            cardcontainer.appendChild(cardcontainer2);
+
+            var card = document.createElement("div");
+            card.className = " bg-gradient-success card ";
+            cardcontainer2.appendChild(card);
+
+            var cardBody = document.createElement("div");
+            cardBody.className = "card-body";
+            card.appendChild(cardBody);
+
+            var cardTitle = document.createElement("h5");
+            cardTitle.className = "card-title";
+            cardTitle.textContent = e.fname;
+            cardBody.appendChild(cardTitle);
+
+            var cardemail = document.createElement("p");
+            cardemail.className = "card-text";
+            cardemail.textContent = "Email: " + e.email;
+            cardBody.appendChild(cardemail);
+
+            var cardpassword = document.createElement("p");
+            cardpassword.className = "card-text";
+            cardpassword.textContent = "Password: " + e.password;
+            cardBody.appendChild(cardpassword);
+
+            var cardcname = document.createElement("p");
+            cardcname.className = "card-text";
+            cardcname.textContent = "Company Name: " + e.cname;
+            cardBody.appendChild(cardcname);
+
+            var cardsemester = document.createElement("p");
+            cardsemester.className = "card-text";
+            cardsemester.textContent = "Semester: " + e.semester;
+            cardBody.appendChild(cardsemester);
+
+            var cardbdate = document.createElement("p");
+            cardbdate.className = "card-text";
+            cardbdate.textContent = "Birth Date: " + e.bdate;
+            cardBody.appendChild(cardbdate);
+
+            var cardgender = document.createElement("p");
+            cardgender.className = "card-text";
+            cardgender.textContent = "Gender: " + e.gender;
+            cardBody.appendChild(cardgender);
+
+            var cardhobby = document.createElement("p");
+            cardhobby.className = "card-text";
+            cardhobby.textContent = "Hobby : " + e.hobby;
+            cardBody.appendChild(cardhobby);
+
+            var editButton = document.createElement("button");
+            editButton.className = "btn btn-primary mr-2";
+            editButton.textContent = "Edit";
+
+            cardBody.appendChild(editButton);
+
+            // Add event listener to the Edit button
+            editButton.addEventListener("click", function () {
+              // alert(e.id);
+              localStorage.removeItem("dataupdate");
+              window.location.href = "./update.html?id=" + e.id;
+              
+             
+            });
+
+            // Create Delete button
+            var deleteButton = document.createElement("button");
+            deleteButton.className = "btn btn-danger";
+            deleteButton.textContent = "Delete";
+
+            cardBody.appendChild(deleteButton);
+
+            deleteButton.addEventListener("click", function () {
+              console.log(e.id);
+              fetch(
+                "https://64538c86e9ac46cedf287029.mockapi.io/register/" + e.id,
+                {
+                  method: "DELETE",
+                }
+              )
+                .then(() => {
+                  let userdata = JSON.parse(localStorage.getItem("user"));
+                  console.log(userdata.id);
+                  if (e.id === userdata.id) {
+                    localStorage.removeItem("isLoggedIn");
+                    window.location.href = "./login.html";
+                  }
+                  cardcontainer2.removeChild(card);
+                })
+                .catch((err) => console.log(err));
+            });
+          });
+        })
+
+        .catch((err) => console.log(err));
+
+      var username = document.getElementById("username");
+      var user = localStorage.getItem("user");
+      user = JSON.parse(user);
+      console.log(user.fname);
+      username.textContent = user.fname;
+      var tbody = document.getElementById("tbody");
+    </script>
+  </body>
+</html>

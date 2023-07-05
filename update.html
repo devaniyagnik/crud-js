@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <title>Update</title>
+
+    <style>
+      body {
+        margin: 0%;
+        padding: 0%;
+        box-sizing: border-box;
+        width: 100%;
+        height: 100vh;
+      }
+      .container {
+        width: 1280px;
+      }
+      .inputcss {
+        width: 40%;
+        margin: 10px 0px;
+        padding: 15px 20px;
+        border: 0px;
+        background-color: antiquewhite;
+        border-radius: 50px;
+      }
+      .inputcss:hover {
+        cursor: pointer;
+      }
+      .inputcss:focus {
+        border: 1px solid gray;
+        outline: none;
+      }
+      .selectsem::after {
+        content: "\25BC"; /* Unicode for downward arrow */
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        font-size: 14px;
+        color: #555;
+        pointer-events: none; /* Prevent interaction with the pseudo-element */
+      }
+      .btn {
+        background-color: blue !important;
+        color: white;
+        margin-bottom: 30px;
+      }
+      .btn:hover {
+        background-color: blueviolet !important;
+        color: white;
+      }
+      .error {
+        color: red;
+        width: 40%;
+        padding: 1px 20px;
+        border: 0px;
+        display: none;
+      }
+
+      @media (max-width: 768px) {
+        .inputcss {
+          width: 100% !important;
+        }
+        .nav-1 {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="container">
+      <div class="d-flex align-items-center justify-content-between p-3 nav-1">
+        <img src="logo.png" alt="ANFRA" />
+        <!-- <p>Don't have an account?<a href="./login.html"> Login now! </a></p> -->
+      </div>
+    </nav>
+    <hr />
+    <div class="container p-4 w-100">
+      <div class="d-flex flex-column align-items-center justify-content-center">
+        <h1>Update Your Account</h1>
+        <p>Update your valid Details</p>
+        <input
+          type="text"
+          id="fname"
+          class="inputcss inputdata"
+          name="fname"
+          placeholder="Full Name"
+        />
+        <span class="error" id="errname"> -> Name Is Empty !</span>
+        <input
+          type="text"
+          id="email"
+          class="inputcss inputdata"
+          name="email"
+          placeholder="Email address"
+        />
+        <span class="error" id="erremail"> -> Gmail Is Empty !</span>
+        <span class="error" id="erremailinvalid"> -> Enter Valid Gmail !</span>
+        <input
+          type="password"
+          id="password"
+          class="inputcss inputdata"
+          name="password"
+          placeholder="Password"
+        />
+        <span class="error" id="errpassword"> -> Password Is Empty !</span>
+        <input
+          type="password"
+          id="cpassword"
+          class="inputcss"
+          name="cpassword"
+          placeholder="Confirm Password"
+        />
+        <span class="error" id="errcpassword">
+          -> Enter Password Again Password Not Match !</span
+        >
+        <div class="d-flex align-items-center my-2">
+          <input
+            type="radio"
+            id="gender1"
+            class="inputcss inputdata mx-3"
+            name="gender"
+            value="male"
+          />Male
+          <input
+            type="radio"
+            id="gender2"
+            class="inputcss inputdata mx-3"
+            name="gender"
+            value="female"
+          />Female
+        </div>
+        <span class="error" id="errgender"> -> Choose Gender !</span>
+        <select name="semester" id="semester" class="inputcss inputdata">
+          <option value="">select semester</option>
+          <option value="semester 1">semester 1</option>
+          <option value="semester 2 ">semester 2</option>
+          <option value="semester 3">semester 3</option>
+          <option value="semester 4">semester 4</option>
+        </select>
+        <span class="error" id="errsemester"> -> Select Semester</span>
+        <h6>select Your Birth Date</h6>
+        <input type="date" id="bdate" class="inputcss inputdata" name="bdate" />
+        <span class="error" id="errbdate"> -> Birth Date Not Selected !</span>
+        <input
+          type="text"
+          id="cname"
+          class="inputcss inputdata"
+          name="cname"
+          placeholder="Company Name"
+        />
+        <span class="error" id="errcname"> -> Company Name Is Empty!</span>
+
+        <h6>Select Your hobby</h6>
+        <div class="d-flex align-items-center my-2">
+          <input
+            type="checkbox"
+            id="playing"
+            class="inputcss mx-3"
+            name="hobby"
+            value="Playing"
+            onchange="handleCheckboxChange(this)"
+          />Playing
+          <input
+            type="checkbox"
+            id="singing"
+            class="inputcss mx-3"
+            name="hobby"
+            value="Singing"
+            onchange="handleCheckboxChange(this)"
+          />Singing
+          <input
+            type="checkbox"
+            id="running"
+            class="inputcss mx-3"
+            name="hobby"
+            value="Running"
+            onchange="handleCheckboxChange(this)"
+          />Running
+        </div>
+        <span class="error" id="errhobby"> -> Any Hobby Not Checked!</span>
+        <input
+          type="button"
+          id="submitbtn"
+          class="inputcss btn"
+          onclick="submitdata()"
+          value="Update Account"
+        />
+        <p class="text-center">
+          By clicking here and continuing,<br />
+          I agree to the <a href="#">Terms of Service</a> and
+          <a href="#">Privacy Policy</a>.
+        </p>
+      </div>
+    </div>
+    <div id="showdata"></div>
+
+    <script>
+      window.addEventListener("load", function () {
+        let dataupdate = localStorage.getItem("dataupdate");
+        if (
+          dataupdate &&
+          window.location.pathname.split("/").pop() === "update.html"
+        ) {
+          window.location.href = "./dashboard.html"; // Redirect to the appropriate page after logout
+        }
+      });
+
+      var userdata = {
+        id: "",
+        fname: "",
+        email: "",
+        password: "",
+        gender: "",
+        cname: "",
+        bdate: "",
+        semester: "",
+        hobby: "",
+      };
+
+      // hobby
+      let hobbystring = [];
+      function handleCheckboxChange(checkbox) {
+        if (checkbox.checked) {
+          hobbystring.push(checkbox.value);
+          // console.log(checkbox.value + " checked");
+          // console.log(hobbystring);
+          userdata.hobby = hobbystring.toString(",");
+        } else {
+          var index = hobbystring.indexOf(checkbox.value);
+
+          if (index !== -1) {
+            hobbystring.splice(index, 1);
+          }
+
+          userdata.hobby = hobbystring.toString(",");
+          //  console.log(checkbox.value + " unchecked");
+          //  console.log(hobbystring);
+        }
+      }
+
+      // all data using name and value
+
+      const inputdata = document.getElementsByClassName("inputdata");
+
+      // console.log(userdata);
+      for (var i = 0; i < inputdata.length; i++) {
+        var input = inputdata[i];
+
+        input.addEventListener("input", (e) => {
+          userdata[e.target.name] = e.target.value;
+        });
+      }
+
+      const urlParams = new URLSearchParams(window.location.search);
+
+      // Get the value of the 'id' parameter
+      const id = urlParams.get("id");
+      userdata.id = id;
+
+      // Use the 'id' value as needed
+      // console.log(id);
+
+      fetch("https://64538c86e9ac46cedf287029.mockapi.io/register/")
+        .then((res) => res.json())
+        .then((data) => {
+          // console.log(data);
+          data.forEach((e) => {
+            if (e.id === id) {
+              fname.value = e.fname;
+              userdata = { ...userdata, fname: e.fname };
+              email.value = e.email;
+              userdata = { ...userdata, email: e.email };
+              password.value = e.password;
+              userdata = { ...userdata, password: e.password };
+              cpassword.value = e.password;
+              semester.value = e.semester;
+              userdata = { ...userdata, semester: e.semester };
+              cname.value = e.cname;
+              userdata = { ...userdata, cname: e.cname };
+              bdate.value = e.bdate;
+              userdata = { ...userdata, bdate: e.bdate };
+
+              var hoobyarr = e.hobby.split(",");
+
+              // Get the checkbox elements
+              const checkboxElements = document.querySelectorAll(
+                'input[type="checkbox"]'
+              );
+
+              // let gethobbystring = [];
+              checkboxElements.forEach((checkbox) => {
+                // Check if the checkbox value exists in the hoobyarr array
+                if (hoobyarr.includes(checkbox.value)) {
+                  checkbox.checked = true; // Set the checkbox as checked
+                  // userdata.hobby = checkbox.value;
+                  if (checkbox.checked) {
+                    hobbystring.push(checkbox.value);
+                    console.log(checkbox.value + " checked");
+                    console.log(hobbystring);
+                    // userdata.hobby = gethobbystring.toString(",");
+                  }
+                }
+              });
+
+              // console.log(e.gender);
+
+              // Get the radio button elements
+              const genderRadios = document.getElementsByName("gender");
+
+              genderRadios.forEach((radio) => {
+                // Check if the radio button value matches the gender value
+                if (radio.value === e.gender) {
+                  radio.checked = true; // Set the radio button as checked
+                  userdata = { ...userdata, gender: e.gender };
+                }
+              });
+              userdata = { ...userdata, hobby: e.hobby };
+            } else {
+            }
+          });
+        })
+        .catch((err) => console.log(err));
+
+      function submitdata() {
+        const fields = [
+          { name: "fname", errorId: "errname" },
+          { name: "email", errorId: "erremail" },
+          { name: "password", errorId: "errpassword" },
+          { name: "cpassword", errorId: "errcpassword" },
+          { name: "semester", errorId: "errsemester" },
+          { name: "bdate", errorId: "errbdate" },
+          { name: "cname", errorId: "errcname" },
+        ];
+
+        let hasError = false;
+
+        fields.forEach((field) => {
+          const input = document.getElementById(field.name);
+          const error = document.getElementById(field.errorId);
+
+          if (input.value === "") {
+            error.style.display = "block";
+            hasError = true;
+          } else {
+            error.style.display = "none";
+          }
+        });
+
+        var errgender = document.getElementById("errgender");
+        if (gender1.checked === false && gender2.checked === false) {
+          errgender.style.display = "block";
+          hasError = true;
+        } else {
+          errgender.style.display = "None";
+        }
+
+        var errhobby = document.getElementById("errhobby");
+        if (
+          playing.checked === false &&
+          running.checked === false &&
+          singing.checked === false
+        ) {
+          errhobby.style.display = "block";
+          hasError = true;
+        } else {
+          errhobby.style.display = "None";
+        }
+        if (password.value !== cpassword.value) {
+          var errcpassword = document.getElementById("errcpassword");
+          errcpassword.style.display = "block";
+          hasError = true;
+        }
+        if (!email.value.match(/\S+@\S+\.\S+/)) {
+          var erremailinvalid = document.getElementById("erremailinvalid");
+          erremailinvalid.style.display = "block";
+          hasError = true;
+          // alert("Please enter a valid email address");
+        }
+        if (hasError) {
+          // Handle the error case here, such as preventing form submission
+        } else {
+          // alert(JSON.stringify(userdata));
+          try {
+            fetch(
+              "https://64538c86e9ac46cedf287029.mockapi.io/register/" +
+                userdata.id,
+              {
+                method: "PUT",
+                body: JSON.stringify(userdata),
+                headers: {
+                  "Content-Type": "application/json; charset=utf-8",
+                },
+              }
+            )
+              .then((res) => res.json())
+              .then((data) => {
+                localStorage.setItem("dataupdate", true);
+                var currentuserid = localStorage.getItem("user");
+                console.log("Data received");
+                if (data.id === JSON.parse(currentuserid).id) {
+                  localStorage.removeItem("user");
+                  localStorage.removeItem("isLoggedIn");
+                  setTimeout(() => {
+                    window.location.href = "./login.html";
+                  }, 1000);
+                } else {
+                  window.location.href = "./dashboard.html";
+                }
+              });
+          } catch (error) {
+            console.log(error);
+          }
+        }
+      }
+
+      // Get data from the API
+
+      fetch("https://64538c86e9ac46cedf287029.mockapi.io/register")
+        .then((res) => res.json())
+        .then((data) => {
+          // console.log(data);
+          if (data.id === id) {
+          } else {
+            const emailverify = document.getElementById("email");
+            emailverify.addEventListener("input", getemail);
+
+            function getemail(e) {
+              for (var i = 0; i < data.length; i++) {
+                if (data[i].email === e.target.value) {
+                  alert("User already exists!");
+                  e.target.value = "";
+                }
+              }
+            }
+          }
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
+    </script>
+  </body>
+</html>

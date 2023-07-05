@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <title>Sign Up</title>
+
+    <style>
+      body {
+        margin: 0%;
+        padding: 0%;
+        box-sizing: border-box;
+      }
+      /* .container {
+        width: 1280px;
+      } */
+      .inputcss {
+        width: 40%;
+        margin: 10px 0px;
+        padding: 15px 20px;
+        border: 0px;
+        background-color: antiquewhite;
+        border-radius: 50px;
+      }
+      .inputcss:hover{
+        cursor: pointer;
+      }
+      
+      .inputcss:focus {
+        border: 1px solid gray;
+        outline: none;
+      }
+      .btn {
+        background-color: blue !important;
+        color: white;
+        margin-bottom: 30px;
+      }
+      .btn:hover {
+        background-color: blueviolet !important;
+        color: white;
+      }
+      .error {
+        color: red;
+        width: 40%;
+        padding: 1px 20px;
+        border: 0px;
+        display: none;
+      }
+
+      @media (max-width: 768px) {
+        .inputcss {
+          width: 100% !important;
+          background-color: red;
+        }
+        .nav-1 {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="fluid-container">
+      <div class="d-flex align-items-center justify-content-between p-3 nav-1">
+        <img src="logo.png" alt="ANFRA" />
+        <p>Have an account ? <button><a href="./login.html" class="text-dark text-decoration-none"> Login Now! </a></button></p>
+      </div>
+    </nav>
+    <hr />
+    <div class="container p-4 w-100">
+      <div class="d-flex flex-column align-items-center justify-content-center">
+        <h1>Register Your Account</h1>
+        <p>
+          Enter your valid email address and password to register your account
+        </p>
+        <input
+          type="text"
+          id="fname"
+          class="inputcss inputdata"
+          name="fname"
+          placeholder="Full Name"
+        />
+        <span class="error" id="errname"> -> Name Is Empty !</span>
+        <input
+          type="text"
+          id="email"
+          class="inputcss inputdata"
+          name="email"
+          placeholder="Email address"
+        />
+        <span class="error" id="erremail"> -> Gmail Is Empty !</span>
+        <span class="error" id="erremailinvalid"> -> Enter Valid Gmail !</span>
+        <input
+          type="password"
+          id="password"
+          class="inputcss inputdata"
+          name="password"
+          placeholder="Password"
+        />
+        <span class="error" id="errpassword"> -> Password Is Empty !</span>
+        <input
+          type="password"
+          id="cpassword"
+          class="inputcss"
+          name="cpassword"
+          placeholder="Confirm Password"
+        />
+        <span class="error" id="errcpassword">
+          -> Enter Password Again Password Not Match !</span
+        >
+        <div class="d-flex align-items-center my-2">
+          <input
+            type="radio"
+            id="gender1"
+            class="inputcss inputdata mx-3"
+            name="gender"
+            value="male"
+          />Male
+          <input
+            type="radio"
+            id="gender2"
+            class="inputcss inputdata mx-3"
+            name="gender"
+            value="female"
+          />Female
+        </div>
+        <span class="error" id="errgender"> -> Choose Gender !</span>
+        <select name="semester" id="semester" class="inputcss inputdata ">
+          <option value="">select semester</option>
+          <option value="semester 1">semester 1</option>
+          <option value="semester 2 ">semester 2</option>
+          <option value="semester 3">semester 3</option>
+          <option value="semester 4">semester 4</option>
+        </select>
+        <span class="error" id="errsemester"> -> Select Semester</span>
+        <h6>Select Your Birth Date</h6>
+        <input type="date" id="bdate" class="inputcss inputdata" name="bdate" />
+        <span class="error" id="errbdate"> -> Birth Date Not Selected !</span>
+        <input
+          type="text"
+          id="cname"
+          class="inputcss inputdata"
+          name="cname"
+          placeholder="Company Name"
+        />
+        <span class="error" id="errcname"> -> Company Name Is Empty!</span>
+        <h6>Select Your Hobby</h6>
+        <div class="d-flex align-items-center my-2">
+          <input
+            type="checkbox"
+            id="playing"
+            class="inputcss mx-3"
+            name="hobby"
+            value="Playing"
+            onchange="handleCheckboxChange(this)"
+          />Playing
+          <input
+            type="checkbox"
+            id="singing"
+            class="inputcss mx-3"
+            name="hobby"
+            value="Singing"
+            onchange="handleCheckboxChange(this)"
+          />Singing
+          <input
+            type="checkbox"
+            id="running"
+            class="inputcss mx-3"
+            name="hobby"
+            value="Running"
+            onchange="handleCheckboxChange(this)"
+          />Running
+        </div>
+        <span class="error" id="errhobby"> -> Any Hobby Not Checked!</span>
+        <input
+          type="button"
+          id="submitbtn"
+          class="inputcss btn"
+          onclick="submitdata()"
+          value="Register Account"
+        />
+        <p class="text-center">
+          By clicking here and continuing,<br />
+          I agree to the <a href="#">Terms of Service</a> and
+          <a href="#">Privacy Policy</a>.
+        </p>
+      </div>
+    </div>
+
+
+    <script>
+      window.addEventListener("load", function () {
+        let datainsert = localStorage.getItem("datainsert");
+        if (
+          datainsert &&
+          window.location.pathname.split("/").pop() === "index.html"
+        ) {
+          window.location.href = "./login.html"; // Redirect to the appropriate page after logout
+        }
+      });
+      var userdata = {
+        fname: "",
+        email: "",
+        password: "",
+        gender: "",
+        cname: "",
+        bdate: "",
+        semester: "",
+        hobby: "",
+      };
+
+      // hobby
+      let hobbystring = [];
+      function handleCheckboxChange(checkbox) {
+        if (checkbox.checked) {
+          hobbystring.push(checkbox.value);
+          console.log(checkbox.value + " checked");
+          console.log(hobbystring);
+          userdata.hobby = hobbystring.toString(",");
+        } else {
+          var index = hobbystring.indexOf(checkbox.value);
+
+          if (index !== -1) {
+            hobbystring.splice(index, 1);
+          }
+
+          userdata.hobby = hobbystring.toString(",");
+          console.log(checkbox.value + " unchecked");
+          console.log(hobbystring);
+        }
+      }
+
+      // all data using name and value
+
+      const inputdata = document.getElementsByClassName("inputdata");
+
+      console.log(userdata);
+      for (var i = 0; i < inputdata.length; i++) {
+        var input = inputdata[i];
+
+        input.addEventListener("input", (e) => {
+          userdata[e.target.name] = e.target.value;
+        });
+      }
+
+      var showdata = document.getElementById("showdata");
+
+      function submitdata() {
+        const fields = [
+          { name: "fname", errorId: "errname" },
+          { name: "email", errorId: "erremail" },
+          { name: "password", errorId: "errpassword" },
+          { name: "cpassword", errorId: "errcpassword" },
+          { name: "semester", errorId: "errsemester" },
+          { name: "bdate", errorId: "errbdate" },
+          { name: "cname", errorId: "errcname" },
+        ];
+
+        let hasError = false;
+
+        fields.forEach((field) => {
+          const input = document.getElementById(field.name);
+          const error = document.getElementById(field.errorId);
+
+          if (input.value === "") {
+            error.style.display = "block";
+            hasError = true;
+          } else {
+            error.style.display = "none";
+          }
+        });
+
+        var errgender = document.getElementById("errgender");
+        if (gender1.checked === false && gender2.checked === false) {
+          errgender.style.display = "block";
+          hasError = true;
+        } else {
+          errgender.style.display = "None";
+        }
+
+        var errhobby = document.getElementById("errhobby");
+        if (
+          playing.checked === false &&
+          running.checked === false &&
+          singing.checked === false
+        ) {
+          errhobby.style.display = "block";
+          hasError = true;
+        } else {
+          errhobby.style.display = "None";
+        }
+        if (password.value !== cpassword.value) {
+          var errcpassword = document.getElementById("errcpassword");
+          errcpassword.style.display = "block";
+          hasError = true;
+        }
+        if (!email.value.match(/\S+@\S+\.\S+/)) {
+          var erremailinvalid = document.getElementById("erremailinvalid");
+          erremailinvalid.style.display = "block";
+          // alert("Please enter a valid email address");
+        }
+        if (hasError) {
+          // Handle the error case here, such as preventing form submission
+        } else {
+          alert(JSON.stringify(userdata));
+          try {
+            fetch("https://64538c86e9ac46cedf287029.mockapi.io/register", {
+              method: "POST",
+              body: JSON.stringify(userdata),
+              headers: {
+                "Content-Type": "application/json; charset=utf-8",
+              },
+            })
+              .then((res) => res.json())
+              .then((data) => {
+                localStorage.setItem("datainsert", true);
+                console.log("data received");
+                history.pushState(null, null, "./login.html");
+                window.location.href = "./login.html";
+              });
+          } catch (error) {
+            console.log(error);
+          }
+        }
+      }
+
+      // Get data from the API
+
+      fetch("https://64538c86e9ac46cedf287029.mockapi.io/register")
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          const emailverify = document.getElementById("email");
+          emailverify.addEventListener("input", getemail);
+
+          function getemail(e) {
+            for (var i = 0; i < data.length; i++) {
+              if (data[i].email === e.target.value) {
+                alert("User already exists!");
+                e.target.value = "";
+              }
+            }
+          }
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
+    </script>
+  </body>
+</html>
